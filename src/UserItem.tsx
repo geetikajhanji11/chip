@@ -1,9 +1,16 @@
-// Update UserItem.js
-
 import React from 'react';
 import './UserItem.css';
 
-const UserItem = ({ item, highlightSubstring }) => {
+interface UserItemProps {
+  item: {
+    name: string;
+    image: string;
+    email: string;
+  };
+  highlightSubstring: string;
+}
+
+const UserItem: React.FC<UserItemProps> = ({ item, highlightSubstring }) => {
   const getHighlightedName = () => {
     if (!highlightSubstring) {
       return item.name;
