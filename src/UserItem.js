@@ -1,7 +1,32 @@
+// Update UserItem.js
+
 import React from 'react';
 import './UserItem.css';
 
-const UserItem = ({ item }) => {
+const UserItem = ({ item, highlightSubstring }) => {
+  const getHighlightedName = () => {
+    if (!highlightSubstring) {
+      return item.name;
+    }
+
+    const index = item.name.toLowerCase().indexOf(highlightSubstring.toLowerCase());
+    if (index === -1) {
+      return item.name;
+    }
+
+    const prefix = item.name.substring(0, index);
+    const highlighted = item.name.substring(index, index + highlightSubstring.length);
+    const suffix = item.name.substring(index + highlightSubstring.length);
+
+    return (
+      <>
+        {prefix}
+        <strong>{highlighted}</strong>
+        {suffix}
+      </>
+    );
+  };
+
   return (
     <div className="user-item-container">
       <img
@@ -10,7 +35,7 @@ const UserItem = ({ item }) => {
         className="user-item-image"
       />
       <div className="user-item-info">
-        <strong className="user-item-name">{item.name}</strong>
+        <div className="user-item-name">{getHighlightedName()}</div>
         <span className="user-item-email">{item.email}</span>
       </div>
     </div>

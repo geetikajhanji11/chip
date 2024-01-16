@@ -18,9 +18,9 @@
     flex-grow: 1;
   }
   
-  .user-item-name {
+  /* .user-item-name {
     font-weight: bold;
-  }
+  } */
   
   .user-item-email {
     margin-left: auto;

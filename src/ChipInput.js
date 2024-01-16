@@ -111,25 +111,25 @@ const ChipInput = ({ users }) => {
         onKeyDown={handleKeyDown}
         placeholder="Add new user..."
       />
-      {showAllItems && (
-        <ul className="item-list">
-          {filteredItems.map((item, index) => (
-            <li key={index} onClick={() => handleItemClick(item)}>
-              <UserItem item={item} />
-            </li>
-          ))}
-        </ul>
-      )}
+{showAllItems && (
+  <ul className="item-list">
+    {filteredItems.map((item, index) => (
+      <li key={index} onClick={() => handleItemClick(item)}>
+        <UserItem item={item} highlightSubstring={inputValue} />
+      </li>
+    ))}
+  </ul>
+)}
 
 {inputValue && (
-        <ul className="item-list">
-          {filteredItems.map((item, index) => (
-            <li key={index} onClick={() => handleItemClick(item)}>
-              <UserItem item={item} />
-            </li>
-          ))}
-        </ul>
-      )}
+  <ul className="item-list">
+    {filteredItems.map((item, index) => (
+      <li key={index} onClick={() => handleItemClick(item)}>
+        <UserItem item={item} highlightSubstring={inputValue} />
+      </li>
+    ))}
+  </ul>
+)}
     </div>
   );
 };
