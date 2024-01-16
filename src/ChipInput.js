@@ -36,17 +36,28 @@ const ChipInput = ({ users }) => {
     return selectedChips.some((chip) => chip.name === user.name);
   };
 
+  function isSubstringPresent(mainString, subString) {
+    // Convert both strings to lowercase for case-insensitive comparison
+    const lowerMainString = mainString.toLowerCase();
+    const lowerSubString = subString.toLowerCase();
+  
+    // Use indexOf to check if subString is present in mainString
+    return lowerMainString.indexOf(lowerSubString) !== -1;
+  }
+
   const handleKeyDown = event => {
     console.log('User pressed: ', event.key);
 
     // console.log(message);
 
-    if (inputValue === '' && event.key === 'Backspace' && !lastChipIndex) {
+    if (inputValue === '' && event.key === 'Backspace' && lastChipIndex === null) {
       // 👇️ your logic here
       console.log('Backspace key pressed ✅');
       const lastChip = selectedChips[selectedChips.length - 1];
+      console.log(lastChip)
       if (lastChip) {
         setLastChipIndex(selectedChips.length - 1);
+        console.log("last chip index = ", lastChipIndex)
       }
 
       // const temp = selectedChips
@@ -61,14 +72,23 @@ const ChipInput = ({ users }) => {
     }
   };
 
+  // const filteredItems = showAllItems
+  //   ? users.filter((user) => !isUserInSelectedChips(user))
+  //   : users.filter(
+  //       (user) =>
+  //         ((user.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
+  //           user.email.toLowerCase().startsWith(inputValue.toLowerCase())) &&
+  //           !isUserInSelectedChips(user))
+  //     );
+
   const filteredItems = showAllItems
-    ? users.filter((user) => !isUserInSelectedChips(user))
-    : users.filter(
-        (user) =>
-          ((user.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-            user.email.toLowerCase().startsWith(inputValue.toLowerCase())) &&
-            !isUserInSelectedChips(user))
-      );
+  ? users.filter((user) => !isUserInSelectedChips(user))
+  : users.filter(
+      (user) =>
+        ((isSubstringPresent(user.name.toLowerCase(), inputValue.toLowerCase())) ||
+          isSubstringPresent(user.email.toLowerCase(),inputValue.toLowerCase()) &&
+          !isUserInSelectedChips(user))
+    );
 
   return (
     <div className="chip-input-container">
@@ -78,7 +98,7 @@ const ChipInput = ({ users }) => {
             key={chip.name}
             chip={chip}
             onChipDelete={handleChipDelete}
-            className={lastChipIndex ? index === lastChipIndex ? ' highlighted-chip' : '' : ''}
+            className={lastChipIndex >= 0 ? index === lastChipIndex ? ' highlighted-chip' : '' : ''}
           />
         ))}
       </div>
